@@ -12,19 +12,19 @@ spring:
         locator:
           enabled: true
       routes:
-        - id: VehicleS1
+        - id: vehicle
           uri: http://localhost:9095
           predicates:
-            - Path=/vehicle/**
-        - id: ParkingS1
+              - Path=/vehicle/**
+        - id: parking
           uri: http://localhost:9096
           predicates:
             - Path=/parking/**
-        - id: BookingS3
+        - id: booking
           uri: http://localhost:9097
           predicates:
             - Path=/booking/**
-        - id: PaymentS4
+        - id: payment
           uri: http://localhost:9098
           predicates:
             - Path=/payment/**

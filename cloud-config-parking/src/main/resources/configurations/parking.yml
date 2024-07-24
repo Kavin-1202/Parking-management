@@ -1,0 +1,19 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+server:
+  port: 9096
+spring:
+  application:
+    name: parking
+  datasource:
+    url: jdbc:mysql://localhost:3306/parking
+    username: root
+    password: pass@word1
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+      show-sql: true
