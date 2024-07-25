@@ -1,5 +1,8 @@
 package com.ust.Payment.service;
 
+import com.ust.Payment.dto.BookingDto;
+import com.ust.Payment.dto.FullResponse;
+import com.ust.Payment.dto.ParkingDto;
 import com.ust.Payment.feign.BookingClient;
 import com.ust.Payment.model.Payment;
 import com.ust.Payment.repository.Paymentrepo;
@@ -15,16 +18,17 @@ public class PaymentService {
     private BookingClient bookingClient;
 
     public Payment createPayment(Payment payment) {
-        Payment savedPayment = paymentRepository.save(payment);
-        /*if (savedPayment.getPaystatus().equalsIgnoreCase("Completed")) {
+        BookingDto booking=bookingClient.getBookingById(payment.getBookid());
+        if(booking.getStatus().equalsIgnoreCase("PaymentPending")){
+            Payment savedPayment = paymentRepository.save(payment);
             bookingClient.paymentConfirmed(savedPayment.getBookid());
-        }*/
-        bookingClient.paymentConfirmed(savedPayment.getBookid());
-        return savedPayment;
+            return savedPayment;
+        }
+        return null;
     }
 
-    public Payment getPaymentByBookingId(Long bookid)
+    public Payment getByPayId(Long payid)
     {
-        return paymentRepository.findByBookid(bookid);
+        return paymentRepository.findByPayid(payid);
     }
 }

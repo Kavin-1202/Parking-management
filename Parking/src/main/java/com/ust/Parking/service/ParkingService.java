@@ -22,22 +22,39 @@ public class ParkingService {
     }
     public int getAvailableSpots(Long parkingId, String Type) {
         Parking parking = getParkingById(parkingId);
-        return Type.equalsIgnoreCase("2-wheeler") ? parking.getAvailableTwoWheelerSpots() : parking.getAvailableFourWheelerSpots();
+        return Type.equalsIgnoreCase("2-wheeler") ? parking.getAvailable_two_wheeler_spots() : parking.getAvailable_four_wheeler_spots();
     }
     public boolean isParkingAvailable(Long parkingId, String Type) {
         return getAvailableSpots(parkingId, Type) >= 1;
     }
-    public void updateParkingAvailability(Long parkingId, String Type, int spots) {
-        Parking parking = parkingRepository.findById(parkingId)
+    public void updateParkingAvailabilityAdd(Long parkingid, String Type) {
+        Parking parking = parkingRepository.findById(parkingid)
                 .orElseThrow(null);
 
         if (Type.equalsIgnoreCase("2-wheeler")) {
-            parking.setAvailableTwoWheelerSpots(parking.getAvailableTwoWheelerSpots() + spots);
+            parking.setAvailable_two_wheeler_spots(parking.getAvailable_two_wheeler_spots() + 1);
         } else if (Type.equalsIgnoreCase("4-wheeler")) {
-            parking.setAvailableFourWheelerSpots(parking.getAvailableFourWheelerSpots() + spots);
+            parking.setAvailable_four_wheeler_spots(parking.getAvailable_four_wheeler_spots() + 1);
         } else {
             throw new IllegalArgumentException("Invalid vehicle type");
         }
         parkingRepository.save(parking);
+    }
+    public void updateParkingAvailabilityRemove(Long parkingid, String Type) {
+        Parking parking = parkingRepository.findById(parkingid)
+                .orElseThrow(null);
+
+        if (Type.equalsIgnoreCase("2-wheeler")) {
+            parking.setAvailable_two_wheeler_spots(parking.getAvailable_two_wheeler_spots() - 1);
+        } else if (Type.equalsIgnoreCase("4-wheeler")) {
+            parking.setAvailable_four_wheeler_spots(parking.getAvailable_four_wheeler_spots() - 1);
+        } else {
+            throw new IllegalArgumentException("Invalid vehicle type");
+        }
+        parkingRepository.save(parking);
+    }
+
+    public Parking findByName(String parkingname) {
+        return parkingRepository.findByParkingname(parkingname);
     }
 }

@@ -19,5 +19,4 @@ public class Vehicle {
     private String registernumber;
     private String type;
     private String ownername;
-    private String status;
 }

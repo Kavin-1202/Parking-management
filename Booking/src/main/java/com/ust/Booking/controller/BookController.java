@@ -18,7 +18,7 @@ public class BookController {
     public List<Booking> getAllBookings() {
         return bookingService.getAllBookings();
     }
-    @GetMapping("/{id}")
+    @GetMapping("/{bookid}")
     public Booking getBookingById(@PathVariable("bookid") Long bookid) {
         return bookingService.getBookingById(bookid);
     }
@@ -26,16 +26,6 @@ public class BookController {
     @PostMapping("/book")
     public Booking createBooking(@RequestBody Booking booking) {
         return bookingService.createBooking(booking);
-    }
-
-    @PutMapping("/{id}/status")
-    public Booking updateBookingStatus(@PathVariable("bookid") Long bookid, @RequestParam("status") String status) {
-        return bookingService.updateBookingStatus(bookid, status);
-    }
-
-    @PutMapping("/{id}/confirm")
-    public Booking confirmBooking(@PathVariable("bookid") Long bookid) {
-        return bookingService.confirmBooking(bookid);
     }
 
     @PutMapping("/{bookid}/complete")

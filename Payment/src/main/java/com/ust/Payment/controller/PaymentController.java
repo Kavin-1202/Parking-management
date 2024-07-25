@@ -13,8 +13,8 @@ public class PaymentController {
     private PaymentService paymentService;
 
     @GetMapping("/{payid}")
-    public Payment getPaymentByBookingId(@PathVariable("id") Long bookid) {
-        return paymentService.getPaymentByBookingId(bookid);
+    public Payment getByPayId(@PathVariable("payid") Long payid) {
+        return paymentService.getByPayId(payid);
     }
 
     @PostMapping("/payment-confirmed")

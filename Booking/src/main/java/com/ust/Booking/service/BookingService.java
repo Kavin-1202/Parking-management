@@ -37,36 +37,28 @@ public class BookingService {
         if (!available) {
             return null;
         }
-        booking.setStatus("Pending"); // Set initial status
-        return bookingRepository.save(booking);
-    }
-
-    public Booking updateBookingStatus(Long bookingId, String status) {
-        Booking booking = getBookingById(bookingId);
-        booking.setStatus(status);
-        return bookingRepository.save(booking);
-    }
-
-    public Booking confirmBooking(Long bookingId) {
-        Booking booking = getBookingById(bookingId);
-        booking.setStatus("Confirmed");
+        booking.setStatus("PaymentPending"); // Set initial status
         return bookingRepository.save(booking);
     }
 
     public Booking completeBooking(Long bookingId) {
         Booking booking = getBookingById(bookingId);
-        if (LocalDateTime.parse(booking.getEndtime()).isBefore(LocalDateTime.now())) {
-            booking.setStatus("Completed");
-            bookingRepository.save(booking);
-            VehicleDto vehicle = vehicleClient.getVehicle(booking.getVehicleid());
-            parkingClient.updateParkingAvailability(booking.getParkingid(), vehicle.getType(), 1); // Re-add 1 spot
-            return booking;
-        } else {
-            throw new RuntimeException("Booking end time is not yet reached.");
-        }
+        booking.setStatus("Completed");
+        bookingRepository.save(booking);
+        VehicleDto vehicle=vehicleClient.getVehicle(booking.getVehicleid());
+        parkingClient.AddOneParkingAvailability(booking.getParkingid(), vehicle.getType());
+        return booking;
     }
 
     public List<Booking> getAllBookings() {
         return bookingRepository.findAll();
+    }
+
+    public void confirmBooking(Long bookid) {
+        Booking booking = getBookingById(bookid);
+        booking.setStatus("PaymentCompleted");
+        VehicleDto vehicle = vehicleClient.getVehicle(booking.getVehicleid());
+        parkingClient.RemoveOneParkingAvailability(booking.getParkingid(), vehicle.getType());
+        bookingRepository.save(booking);
     }
 }

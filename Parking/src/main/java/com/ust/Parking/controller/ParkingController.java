@@ -16,6 +16,10 @@ public class ParkingController {
     public List<Parking> getAllParkingSpots() {
         return parkingService.findAll();
     }
+    @GetMapping("/{parkingname}")
+    public Parking getParkingByName(@PathVariable("parkingname") String parkingname) {
+        return parkingService.findByName(parkingname);
+    }
     @PostMapping
     public Parking addParkingSpot(@RequestBody Parking parking) {
         return parkingService.save(parking);
@@ -24,15 +28,18 @@ public class ParkingController {
     public int getAvailableSpots(@PathVariable("id") Long id, @RequestParam("Type") String Type) {
         return parkingService.getAvailableSpots(id, Type);
     }
-
     @GetMapping("/{id}/is-available")
     public boolean isParkingAvailable(@PathVariable("id") Long id, @RequestParam("Type") String Type) {
         return parkingService.isParkingAvailable(id, Type);
     }
-    @PatchMapping("/{id}/update-availability")
-    public void updateParkingAvailability(@PathVariable("id") Long id,
-                                          @RequestParam("Type") String Type,
-                                          @RequestParam("spots") int spots) {
-        parkingService.updateParkingAvailability(id, Type, spots);
+    @PutMapping("/{parkingid}/add-availability")
+    public void AddOneParkingAvailability(@PathVariable("parkingid") Long parkingid,
+                                          @RequestParam("Type") String Type) {
+        parkingService.updateParkingAvailabilityAdd(parkingid, Type);
+    }
+    @PutMapping("/{parkingid}/remove-availability")
+    public void RemoveOneParkingAvailability(@PathVariable("parkingid") Long parkingid,
+                                           @RequestParam("Type") String Type) {
+        parkingService.updateParkingAvailabilityRemove(parkingid, Type);
     }
 }
