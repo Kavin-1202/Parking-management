@@ -1,13 +1,13 @@
 package com.ust.Payment.service;
 
 import com.ust.Payment.dto.BookingDto;
-import com.ust.Payment.dto.FullResponse;
-import com.ust.Payment.dto.ParkingDto;
 import com.ust.Payment.feign.BookingClient;
 import com.ust.Payment.model.Payment;
 import com.ust.Payment.repository.Paymentrepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class PaymentService {
@@ -30,5 +30,13 @@ public class PaymentService {
     public Payment getByPayId(Long payid)
     {
         return paymentRepository.findByPayid(payid);
+    }
+
+    public List<Payment> getAllPayments() {
+        return paymentRepository.findAll();
+    }
+
+    public List<Payment> getPaymentsByBookingid(Long bookid) {
+        return paymentRepository.findByBookid(bookid);
     }
 }

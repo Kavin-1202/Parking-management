@@ -14,11 +14,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Parking {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long parking_id;
     private String parkingname;
     private String location;
     private int available_two_wheeler_spots;
     private int available_four_wheeler_spots;
+
 
 }

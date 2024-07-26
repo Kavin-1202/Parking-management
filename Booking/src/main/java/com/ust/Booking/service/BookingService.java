@@ -27,8 +27,8 @@ public class BookingService {
     @Autowired
     private ParkingFeignClient parkingClient;
 
-    public Booking getBookingById(Long id) {
-        return bookingRepository.findById(id).orElseThrow(null);
+    public Booking getBookingById(Long bookid) {
+        return bookingRepository.findByBookid(bookid);
     }
 
     public Booking createBooking(Booking booking) {
@@ -60,5 +60,9 @@ public class BookingService {
         VehicleDto vehicle = vehicleClient.getVehicle(booking.getVehicleid());
         parkingClient.RemoveOneParkingAvailability(booking.getParkingid(), vehicle.getType());
         bookingRepository.save(booking);
+    }
+
+    public List<Booking> getBookingsByVehicleId(Long vehicleid) {
+        return bookingRepository.findAllByVehicleid(vehicleid);
     }
 }

@@ -4,10 +4,9 @@ import lombok.Data;
 
 @Data
 public class ParkingDto {
-    private Long parkingid;
+    private Long parking_id;
+    private String parkingname;
     private String location;
-    private int twoWheelerCapacity;
-    private int fourWheelerCapacity;
-    private int availableTwoWheelerSpots;
-    private int availableFourWheelerSpots;
+    private int available_two_wheeler_spots;
+    private int available_four_wheeler_spots;
 }

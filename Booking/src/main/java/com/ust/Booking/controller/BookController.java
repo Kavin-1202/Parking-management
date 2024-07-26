@@ -22,6 +22,10 @@ public class BookController {
     public Booking getBookingById(@PathVariable("bookid") Long bookid) {
         return bookingService.getBookingById(bookid);
     }
+    @GetMapping("/vehicle/{vehicleid}")
+    List<Booking> getBookingsByVehicleId(@PathVariable("vehicleid") Long vehicleid){
+        return bookingService.getBookingsByVehicleId(vehicleid);
+    }
 
     @PostMapping("/book")
     public Booking createBooking(@RequestBody Booking booking) {

@@ -1,5 +1,6 @@
 package com.ust.User.controller;
 
+import com.ust.User.dto.FullResponse;
 import com.ust.User.model.Vehicle;
 import com.ust.User.service.Vehicleservice;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,5 +24,9 @@ public class VehicleController {
     @GetMapping("{id}")
     public Vehicle getVehicle(@PathVariable Long id){
         return vehicleService.getVehicleById(id);
+    }
+    @GetMapping("/vehicleDetails/{vehicleid}")
+    public FullResponse getDetails(@PathVariable Long vehicleid){
+        return vehicleService.getVehicleDetails(vehicleid);
     }
 }
