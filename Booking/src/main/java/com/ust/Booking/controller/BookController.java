@@ -1,5 +1,7 @@
 package com.ust.Booking.controller;
 
+import com.ust.Booking.client.BookingDto;
+import com.ust.Booking.client.Parking;
 import com.ust.Booking.model.Booking;
 import com.ust.Booking.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +20,16 @@ public class BookController {
     public List<Booking> getAllBookings() {
         return bookingService.getAllBookings();
     }
+    @GetMapping("/parking/{bookid}")
+    public Parking getParking(@PathVariable("bookid") Long bookid) {
+        return bookingService.getParkingByBookingId(bookid);
+    }
     @GetMapping("/{bookid}")
     public Booking getBookingById(@PathVariable("bookid") Long bookid) {
         return bookingService.getBookingById(bookid);
     }
     @GetMapping("/vehicle/{vehicleid}")
-    List<Booking> getBookingsByVehicleId(@PathVariable("vehicleid") Long vehicleid){
+    List<BookingDto> getBookingsByVehicleId(@PathVariable("vehicleid") Long vehicleid){
         return bookingService.getBookingsByVehicleId(vehicleid);
     }
 

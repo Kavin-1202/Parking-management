@@ -11,7 +11,6 @@ import java.util.List;
 @NoArgsConstructor
 public class FullResponse {
     private Vehicle vehicle;
-    private List<Booking> booking;
-    private List<Payment> payments;
+    private List<BookingDto> booking;
 
 }

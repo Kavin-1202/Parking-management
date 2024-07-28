@@ -1,19 +1,19 @@
 package com.ust.Booking.service;
 
-import com.ust.Booking.client.ParkingDto;
+import com.ust.Booking.client.BookingDto;
+import com.ust.Booking.client.Parking;
+import com.ust.Booking.client.Payment;
 import com.ust.Booking.client.VehicleDto;
 import com.ust.Booking.feign.ParkingFeignClient;
+import com.ust.Booking.feign.PaymentFeignClient;
 import com.ust.Booking.feign.VehicleFeignClient;
 import com.ust.Booking.model.Booking;
 import com.ust.Booking.repository.Bookingrepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-
-import static com.fasterxml.jackson.databind.type.LogicalType.DateTime;
 
 @Service
 public class BookingService {
@@ -26,9 +26,15 @@ public class BookingService {
 
     @Autowired
     private ParkingFeignClient parkingClient;
+    @Autowired
+    private PaymentFeignClient paymentClient;
 
     public Booking getBookingById(Long bookid) {
         return bookingRepository.findByBookid(bookid);
+    }
+    public Parking getParkingByBookingId(Long bookid){
+        Booking book=bookingRepository.findByBookid(bookid);
+        return parkingClient.getParkingById(book.getParkingid());
     }
 
     public Booking createBooking(Booking booking) {
@@ -62,7 +68,23 @@ public class BookingService {
         bookingRepository.save(booking);
     }
 
-    public List<Booking> getBookingsByVehicleId(Long vehicleid) {
-        return bookingRepository.findAllByVehicleid(vehicleid);
+    public List<BookingDto> getBookingsByVehicleId(Long vehicleid) {
+        List<Booking> bookings=bookingRepository.findByVehicleid(vehicleid);
+        List<BookingDto> dtos=new ArrayList<>();
+        for(Booking book : bookings){
+            BookingDto dto=new BookingDto();
+            dto.setBookid(book.getBookid());
+            dto.setVehicleid(book.getVehicleid());
+            dto.setParkingid(book.getParkingid());
+            dto.setStarttime(book.getStarttime());
+            dto.setEndtime(book.getEndtime());
+            dto.setStatus(book.getStatus());
+            Parking parkingDto = getParkingByBookingId(book.getBookid());
+            dto.setParking(parkingDto);
+            Payment payment= paymentClient.getPaymentsByBookingid(book.getBookid());
+            dto.setPayment(payment);
+            dtos.add(dto);
+        }
+        return dtos;
     }
 }

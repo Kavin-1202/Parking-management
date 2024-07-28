@@ -27,6 +27,7 @@ public class VehicleController {
     }
     @GetMapping("/vehicleDetails/{vehicleid}")
     public FullResponse getDetails(@PathVariable Long vehicleid){
+
         return vehicleService.getVehicleDetails(vehicleid);
     }
 }

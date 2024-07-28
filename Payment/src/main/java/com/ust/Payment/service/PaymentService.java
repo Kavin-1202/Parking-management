@@ -32,11 +32,8 @@ public class PaymentService {
         return paymentRepository.findByPayid(payid);
     }
 
-    public List<Payment> getAllPayments() {
-        return paymentRepository.findAll();
-    }
 
-    public List<Payment> getPaymentsByBookingid(Long bookid) {
+    public Payment getPaymentsByBookingid(Long bookid) {
         return paymentRepository.findByBookid(bookid);
     }
 }

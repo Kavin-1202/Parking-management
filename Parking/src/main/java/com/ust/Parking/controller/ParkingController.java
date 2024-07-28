@@ -12,12 +12,16 @@ import java.util.List;
 public class ParkingController {
     @Autowired
     private ParkingService parkingService;
+    @GetMapping("/{parkingid}")
+    public Parking getParkingById(@PathVariable("parkingid") Long parkingid){
+        return parkingService.findById(parkingid);
+    }
     @GetMapping
     public List<Parking> getAllParkingSpots() {
         return parkingService.findAll();
     }
-    @GetMapping("/{parkingname}")
-    public Parking getParkingByName(@PathVariable("parkingname") String parkingname) {
+    @GetMapping("name/{parkingname}")
+    public Parking getParkingByName(@RequestParam("parkingname") String parkingname) {
         return parkingService.findByName(parkingname);
     }
     @PostMapping

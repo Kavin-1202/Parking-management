@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Parking {
     @Id
-    private Long parking_id;
+    private Long parkingid;
     private String parkingname;
     private String location;
     private int available_two_wheeler_spots;

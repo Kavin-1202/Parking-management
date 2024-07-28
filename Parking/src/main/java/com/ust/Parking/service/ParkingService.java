@@ -11,8 +11,8 @@ import java.util.List;
 public class ParkingService {
     @Autowired
     private Parkingrepo parkingRepository;
-    public Parking getParkingById(Long id) {
-        return parkingRepository.findById(id).orElse(null);
+    public Parking getParkingById(Long parkingid) {
+        return parkingRepository.findByParkingid(parkingid);
     }
     public List<Parking> findAll() {
         return parkingRepository.findAll();
@@ -56,5 +56,9 @@ public class ParkingService {
 
     public Parking findByName(String parkingname) {
         return parkingRepository.findByParkingname(parkingname);
+    }
+
+    public Parking findById(Long parkingid) {
+        return parkingRepository.findById(parkingid).orElse(null);
     }
 }

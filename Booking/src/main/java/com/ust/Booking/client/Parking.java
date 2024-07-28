@@ -3,8 +3,8 @@ package com.ust.Booking.client;
 import lombok.Data;
 
 @Data
-public class ParkingDto {
-    private Long parking_id;
+public class Parking {
+    private Long parkingid;
     private String parkingname;
     private String location;
     private int available_two_wheeler_spots;

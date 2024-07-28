@@ -18,12 +18,9 @@ public class PaymentController {
     public Payment getByPayId(@PathVariable("payid") Long payid) {
         return paymentService.getByPayId(payid);
     }
-    @GetMapping("/allpayments")
-    public List<Payment> getAllPayments() {
-        return paymentService.getAllPayments();
-    }
-    @GetMapping("/booking/{bookid}/allpayments")
-    public List<Payment> getPaymentsByBookingid(@PathVariable("bookid") Long bookid){
+
+    @GetMapping("/booking/allpayments/{bookid}")
+    public Payment getPaymentsByBookingid(@PathVariable("bookid") Long bookid){
         return paymentService.getPaymentsByBookingid(bookid);
     }
 

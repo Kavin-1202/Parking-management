@@ -10,5 +10,5 @@ import java.util.List;
 public interface Paymentrepo extends JpaRepository<Payment,Long> {
     Payment findByPayid(Long payid);
 
-    List<Payment> findByBookid(Long bookid);
+    Payment findByBookid(Long bookid);
 }
